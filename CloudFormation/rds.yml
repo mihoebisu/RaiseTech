@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Template for RDS MySQL instance
+
+Resources:
+  rdsDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for RDS instance
+      SubnetIds:
+        - !ImportValue PrivateSubnet1Id
+        - !ImportValue PrivateSubnet2Id
+      Tags:
+        - Key: Name
+          Value: rdsDBSubnetGroup
+
+  MyDBInstance:
+    Type: 'AWS::RDS::DBInstance'
+    Properties:
+      DBInstanceIdentifier: rds-mysql-projectraisetech202307
+      Engine: mysql
+      DBInstanceClass: db.t3.micro
+      MasterUsername: admin
+      MasterUserPassword: A1b2C3d4E5$
+      VPCSecurityGroups:
+        - !ImportValue RDSSecurityGroupID
+      Port: 3306
+      DBName: myDatabase
+      AvailabilityZone: ap-northeast-1a
+      DBSubnetGroupName: !Ref rdsDBSubnetGroup
+      AllocatedStorage: 20
+
+Outputs:
+  MyDBInstanceEndpoint:
+    Description: Endpoint of the DB instance
+    Value: !GetAtt MyDBInstance.Endpoint.Address
+    Export:
+      Name: MyDBInstanceEndpoint

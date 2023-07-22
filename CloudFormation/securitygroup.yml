@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: template for Securitygroup
+Resources:
+#========================================================#
+#EC2
+#========================================================#
+  EC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: SecurityGroup_for_project_raisetech
+      GroupDescription: This is a security group for EC2
+      VpcId: !ImportValue VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 3000
+          ToPort: 3000
+          CidrIp: 0.0.0.0/0
+#========================================================#
+#RDS
+#========================================================#
+  RDSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: RDS-projectRaiseTech
+      GroupDescription: This is a security group for RDS
+      VpcId: !ImportValue VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+#========================================================#
+#ALB
+#========================================================#
+  ALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: SG-for-project-RaiseTech-ALB
+      GroupDescription: This is a security group for ALB
+      VpcId: !ImportValue VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+#========================================================#
+#Outputs
+#========================================================#
+Outputs:
+  EC2SecurityGroupID:
+    Description: Security Group ID for the EC2 instances
+    Value: !Ref EC2SecurityGroup
+    Export:
+      Name: EC2SecurityGroupID
+  RDSSecurityGroupID:
+    Description: Security Group ID for the RDS instances
+    Value: !Ref RDSSecurityGroup
+    Export:
+      Name: RDSSecurityGroupID
+  ALBSecurityGroupID:
+    Description: Security Group ID for the ALB
+    Value: !Ref ALBSecurityGroup
+    Export:
+      Name: ALBSecurityGroupID
+
+

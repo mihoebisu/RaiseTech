@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Template for EC2
+
+Parameters:
+  EC2KeyName:
+    Description: The EC2 Key Pair to allow SSH access to the instance
+    Type: String
+    Default: "RaiseTechdev"
+
+Resources:
+  myEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName: !Ref EC2KeyName
+      ImageId: ami-05ffd9ad4ddd0d6e2
+      InstanceType: t2.micro
+      UserData: !Base64 |
+        #!/bin/bash -ex
+        sudo yum update -y
+        yum install -y git
+      Tags:
+        - Key: Name
+          Value: test-ec2
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          SubnetId: !ImportValue PublicSubnet1Id
+          GroupSet:
+            - !ImportValue EC2SecurityGroupID
+
+Outputs:
+  MyEC2InstanceId:
+    Description: The Instance ID of the created EC2 instance
+    Value: !Ref myEC2Instance
+    Export:
+      Name: MyEC2InstanceId
+
+  MyEC2PublicIp:
+    Description: The public IP address of the created EC2 instance
+    Value: !GetAtt myEC2Instance.PublicIp
+    Export:
+      Name: MyEC2PublicIp

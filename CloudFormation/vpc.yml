@@ -1,0 +1,176 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Template for VPC
+Resources:
+#========================================================#
+# VPC
+#========================================================#
+  MyVPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: 'プロジェクトRaiseTech-vpc'
+#========================================================#
+# InternetGateway
+#========================================================#
+
+
+  MyInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: 'プロジェクトRaiseTech-igw'
+
+
+  AttachGateway:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref MyVPC
+      InternetGatewayId: !Ref MyInternetGateway
+
+#========================================================#
+# Subnet
+#========================================================#
+
+  MyPublicSubnet1:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 10.0.0.0/20
+      AvailabilityZone: 'ap-northeast-1a'
+      Tags:
+        - Key: Name
+          Value: 'プロジェクトRaiseTech-subnet-public1-ap-northeast-1a'
+
+  MyPublicSubnet2:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 10.0.16.0/20
+      AvailabilityZone: 'ap-northeast-1c'
+      Tags:
+        - Key: Name
+          Value: 'プロジェクトRaiseTech-subnet-public2-ap-northeast-1c'
+
+  MyPrivateSubnet1:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 10.0.128.0/20
+      AvailabilityZone: 'ap-northeast-1a'
+      Tags:
+        - Key: Name
+          Value: 'プロジェクトRaiseTech-subnet-private1-ap-northeast-1a'
+
+  MyPrivateSubnet2:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 10.0.144.0/20
+      AvailabilityZone: 'ap-northeast-1c'
+      Tags:
+        - Key: Name
+          Value: 'プロジェクトRaiseTech-subnet-private2-ap-northeast-1c'
+
+#========================================================#
+# RouteTable
+#========================================================#
+
+  MyPublicRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: 'プロジェクトRaiseTech-rtb-public'
+
+  MyPublicRoute:
+    Type: 'AWS::EC2::Route'
+    DependsOn: AttachGateway
+    Properties:
+      RouteTableId: !Ref MyPublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref MyInternetGateway
+
+  MyPrivateRouteTable1:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: 'プロジェクトRaiseTech-rtb-private1-ap-northeast-1a'
+
+  MyPrivateRouteTable2:
+    Type: 'AWS::EC2::RouteTable'
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags:
+        - Key: Name
+          Value: 'プロジェクトRaiseTech-rtb-private2-ap-northeast-1c'
+
+
+#========================================================#
+# SubnetRouteTableAssociation
+#========================================================#
+
+  PublicSubnet1RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref MyPublicSubnet1
+      RouteTableId: !Ref MyPublicRouteTable
+
+  PublicSubnet2RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref MyPublicSubnet2
+      RouteTableId: !Ref MyPublicRouteTable
+
+  PrivateSubnet1RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref MyPrivateSubnet1
+      RouteTableId: !Ref MyPrivateRouteTable1
+
+  PrivateSubnet2RouteTableAssociation:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    Properties:
+      SubnetId: !Ref MyPrivateSubnet2
+      RouteTableId: !Ref MyPrivateRouteTable2
+#========================================================#
+#Outputs
+#========================================================#
+
+
+Outputs:
+  VPCId:
+    Description: The ID of the VPC
+    Value: !Ref MyVPC
+    Export:
+      Name: VPCId
+  PublicSubnet1Id:
+    Description: The ID of the first public subnet
+    Value: !Ref MyPublicSubnet1
+    Export:
+      Name: PublicSubnet1Id
+  PublicSubnet2Id:
+    Description: The ID of the second public subnet
+    Value: !Ref MyPublicSubnet2
+    Export:
+      Name: PublicSubnet2Id
+  PrivateSubnet1Id:
+    Description: The ID of the first private subnet
+    Value: !Ref MyPrivateSubnet1
+    Export:
+      Name: PrivateSubnet1Id
+  PrivateSubnet2Id:
+    Description: The ID of the second private subnet
+    Value: !Ref MyPrivateSubnet2
+    Export:
+      Name: PrivateSubnet2Id
+
+
+
+

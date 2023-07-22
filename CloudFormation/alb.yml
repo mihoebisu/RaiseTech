@@ -1,0 +1,26 @@
+myELBname:
+  Type: AWS::ElasticLoadBalancing::LoadBalancer
+  Properties:
+    Scheme: internal
+    SecurityGroups:
+      - sg-id
+    Subnets:
+      - subnet-id
+    Instances:
+      - instance-id
+    Listeners:
+      - LoadBalancerPort: 
+        InstancePort: 
+        Protocol: HTTP|HTTPS|TCP|SSL
+        InstanceProtocol: HTTP|HTTPS|TCP|SSL
+      - LoadBalancerPort: '443'
+        InstancePort: '443'
+        Protocol: HTTPS
+        InstanceProtocol: HTTPS
+        SSLCertificateId: 
+    HealthCheck:
+      Target: TCP:port or HTTPS|HTTP:port/PathToPing
+      HealthyThreshold: 
+      Interval: 
+      Timeout: 
+      UnhealthyThreshold: 
