@@ -170,7 +170,3 @@ Outputs:
     Value: !Ref MyPrivateSubnet2
     Export:
       Name: PrivateSubnet2Id
-
-
-
-

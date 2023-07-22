@@ -17,10 +17,10 @@ myELBname:
         InstancePort: '443'
         Protocol: HTTPS
         InstanceProtocol: HTTPS
-        SSLCertificateId: 
+        SSLCertificateId:
     HealthCheck:
       Target: TCP:port or HTTPS|HTTP:port/PathToPing
-      HealthyThreshold: 
-      Interval: 
-      Timeout: 
-      UnhealthyThreshold: 
+      HealthyThreshold:
+      Interval:
+      Timeout:
+      UnhealthyThreshold:

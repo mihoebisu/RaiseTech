@@ -1,6 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Template for EC2
-
 Parameters:
   EC2KeyName:
     Description: The EC2 Key Pair to allow SSH access to the instance

@@ -3,7 +3,7 @@ Description: S3 bucket template
 Resources:
   MyS3Bucket:
     Type: AWS::S3::Bucket
-    Properties: 
+    Properties:
       AccessControl: Private
       BucketName: projectraisetech
       Tags:

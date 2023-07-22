@@ -1,6 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Template for RDS MySQL instance
-
 Resources:
   rdsDBSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
