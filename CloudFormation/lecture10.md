@@ -15,6 +15,7 @@ Parameters:
   LatestAmiId:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
     Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+```
 
 
 スタックを再作成したものの、同じエラーが再発しました。原因を探ると、どうやら別のリージョンのIDを参照していたようです。これにより、リージョンによってIDが異なることを学びました。
