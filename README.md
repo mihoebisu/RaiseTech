@@ -1,8 +1,8 @@
-# raisetech-live8-sample-app
+# RaiseTech課題提出用リポジトリ
 
 ## 概要
 
-- CRUD 処理が出来る簡単な Rails アプリケーションです。
+- 第5回課題で使用したサンプルアプリケーションはCRUD 処理が出来る簡単な Rails アプリケーションです。
 
 ## 動作環境
 
@@ -38,23 +38,7 @@ v17.9.1
 ### DB エンジン
 
 - MySQLを採用しています。
-  - Cloud9 上で動作させる場合は、下記の手順に沿って環境構築を行ってください。
-    - https://github.com/MasatoshiMizumoto/raisetech_documents/blob/main/aws/docs/install_mysql_on_cloud9_amazon_linux_2.md
 
-### 環境構築
-- 環境構築はターミナルで以下のコマンドを実行することで可能になります。
-```bash
-bin/setup
-```
 
-### アプリケーションサーバーの起動
-- railsサーバーの起動は実行環境に合わせて以下のコマンドを実行してください
-#### ローカル環境
-```bash
-bin/dev
-```
-
-#### Cloud9
-```bash
-bin/cloud9_dev
-```
+##　CloudFormationで構築した環境の構成図
+![AWS構成図05 drawio](https://github.com/mihoebisu/RaiseTech/assets/130433491/8a40300d-eff7-45db-b48b-6e27ab7564ff)
