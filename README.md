@@ -40,5 +40,5 @@ v17.9.1
 - MySQLを採用しています。
 
 
-##　CloudFormationで構築した環境の構成図
+## CloudFormationで構築した環境の構成図
 ![AWS構成図05 drawio](https://github.com/mihoebisu/RaiseTech/assets/130433491/8a40300d-eff7-45db-b48b-6e27ab7564ff)
