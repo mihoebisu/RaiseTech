@@ -19,7 +19,7 @@ Resources:
       Engine: mysql
       DBInstanceClass: db.t3.micro
       MasterUsername: admin
-      MasterUserPassword: !Sub '{{resolve:secretsmanager:my-secret-name:SecretString:password}}'
+      MasterUserPassword: '{{resolve:secretsmanager:my-secret-name:SecretString:password}}'
       VPCSecurityGroups:
         - !ImportValue RDSSecurityGroupID
       Port: 3306
