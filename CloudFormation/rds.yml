@@ -19,12 +19,12 @@ Resources:
       Engine: mysql
       DBInstanceClass: db.t3.micro
       MasterUsername: admin
-      MasterUserPassword: A1b2C3d4E5$
+      MasterUserPassword: '{{resolve:secretsmanager:my-secret-name:SecretString:password}}'
       VPCSecurityGroups:
         - !ImportValue RDSSecurityGroupID
       Port: 3306
       DBName: myDatabase
-      AvailabilityZone: ap-northeast-1a
+      AvailabilityZone: !Select [ 0, !GetAZs '' ]
       DBSubnetGroupName: !Ref rdsDBSubnetGroup
       AllocatedStorage: 20
 
